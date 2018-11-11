@@ -1,4 +1,4 @@
-# fraudCreditCard
+# Credit Card Fraud Detection
 This is fraud Credit Card transaction detection implementation from Kaggle
 
 # Kaggle Link
