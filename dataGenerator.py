@@ -1,5 +1,6 @@
 import pandas as pd
 import random
+import numpy as np
 
 def load_data(filename = 'creditcard.csv', ignoreTime = False):
     data = pd.read_csv(filename)
