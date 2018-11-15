@@ -2,6 +2,9 @@ import pandas as pd
 import random
 import numpy as np
 
+trainIdxFileName = 'trainIdx.dat'
+testIdxFileName = 'testIdx.dat'
+
 def load_data(filename = 'creditcard.csv', ignoreTime = False):
     data = pd.read_csv(filename)
     numIndex = len(data.columns)
@@ -32,3 +35,36 @@ def resampling(feature,label,alpha=1,method='under_sampling'):
         else:
             returnArr[returnIdx,:] = feature[negIdxOri[returnIdx-posNum],:]
     return returnArr, returnLabel
+
+def dataSplit(label, percent=0.2):
+    numInstances = len(label)
+    universeSet = set(range(numInstances))
+    testIdx = np.random.randint(numInstances, size=int(numInstances*percent))
+    trainIdx = universeSet - set(testIdx)
+    with open(trainIdxFileName, 'w') as trainF:
+        for idx in trainIdx:
+            trainF.write(str(idx) + '\n')
+    with open(testIdxFileName, 'w') as testF:
+        for idx in testIdx:
+            testF.write(str(idx) + '\n')
+
+def readIdx(train = True):
+    idxList = []
+    if train == True:
+        filename = trainIdxFileName
+    else:
+        filename = testIdxFileName
+    with open(filename ,'r') as idxF:
+        for line in idxF:
+            idxList.append(int(line))
+    return idxList
+
+def splitData(filename = 'creditcard.csv', ignoreTime = False):
+    feature, label = load_data(filename, ignoreTime)
+    trainIdx = readIdx(True)
+    testIdx = readIdx(False)
+    trainFeature = feature[trainIdx,:]
+    trainLabel = label[trainIdx]
+    testFeature = feature[testIdx,:]
+    testLabel = label[testIdx]
+    return trainFeature, trainLabel, testFeature, testLabel
