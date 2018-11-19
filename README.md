@@ -1,10 +1,10 @@
 # Credit Card Fraud Detection
 This is fraud Credit Card transaction detection implementation from Kaggle
 
-# Kaggle Link
+### Kaggle Link
 https://www.kaggle.com/mlg-ulb/creditcardfraud/home
 
-# Proposal Link
+### Proposal Link
 https://docs.google.com/document/d/1xNbb7ZK95USZxq4qOVMNje0ACf69GH7Ae3fd46vP4Uk/edit
 
 # Load data steps
