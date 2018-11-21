@@ -17,7 +17,7 @@ def resampling(feature,label,alpha=1,method='under_sampling'):
     posNum = 0
     negNum = 0
     featureNum = feature.shape[1]
-    for insIdx in xrange(numInstances):
+    for insIdx in range(numInstances):
         if label[insIdx] > 0:
             posNum += 1
         else:
