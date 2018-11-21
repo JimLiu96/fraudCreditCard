@@ -29,7 +29,7 @@ def resampling(feature,label,alpha=1,method='under_sampling'):
     returnArr = np.zeros([totalSampleNum, featureNum])
     returnLabel = np.append(np.ones(posNum),np.zeros(negSampleNum))
     negIdxOri = negIdx[np.random.randint(negNum, size=negSampleNum)]
-    for returnIdx in xrange(totalSampleNum):
+    for returnIdx in range(totalSampleNum):
         if returnIdx < posNum:
             returnArr[returnIdx,:] = feature[posIdx[returnIdx],:]
         else:
