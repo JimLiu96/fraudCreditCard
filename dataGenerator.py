@@ -24,16 +24,28 @@ def resampling(feature,label,alpha=1,method='under_sampling'):
             negNum += 1
     posIdx = np.where(label == 1)[0]
     negIdx = np.where(label == 0)[0]
-    negSampleNum = int(alpha * posNum)
-    totalSampleNum = negSampleNum + posNum
-    returnArr = np.zeros([totalSampleNum, featureNum])
-    returnLabel = np.append(np.ones(posNum),np.zeros(negSampleNum))
-    negIdxOri = negIdx[np.random.randint(negNum, size=negSampleNum)]
-    for returnIdx in range(totalSampleNum):
-        if returnIdx < posNum:
-            returnArr[returnIdx,:] = feature[posIdx[returnIdx],:]
-        else:
-            returnArr[returnIdx,:] = feature[negIdxOri[returnIdx-posNum],:]
+    if method == 'under_sampling':
+        negSampleNum = int(alpha * posNum)
+        totalSampleNum = negSampleNum + posNum
+        returnArr = np.zeros([totalSampleNum, featureNum])
+        returnLabel = np.append(np.ones(posNum),np.zeros(negSampleNum))
+        negIdxOri = negIdx[np.random.randint(negNum, size=negSampleNum)]
+        for returnIdx in range(totalSampleNum):
+            if returnIdx < posNum:
+                returnArr[returnIdx,:] = feature[posIdx[returnIdx],:]
+            else:
+                returnArr[returnIdx,:] = feature[negIdxOri[returnIdx-posNum],:]
+    if method == 'over_sampling':
+        posSampleNum = int(negNum / alpha)
+        totalSampleNum = negNum + posSampleNum
+        returnArr = np.zeros([totalSampleNum, featureNum])
+        returnLabel = np.append(np.ones(posSampleNum),np.zeros(negNum))
+        posIdxOri = posIdx[np.random.randint(posNum, size=posSampleNum)]
+        for returnIdx in range(totalSampleNum):
+            if returnIdx < posSampleNum:
+                returnArr[returnIdx,:] = feature[posIdxOri[returnIdx],:]
+            else:
+                returnArr[returnIdx,:] = feature[negIdx[returnIdx - posSampleNum],:]
     return returnArr, returnLabel
 
 def dataSplit(label, percent=0.2):
